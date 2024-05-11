@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/RedInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="RED"
+        android:inputType="number"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/GreenInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="GREEN"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@+id/RedInput"
+        android:layout_marginTop="10dp"
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/BlueInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="BLUE"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@+id/GreenInput"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/RedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RED:"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/BlueInput"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        />
+
+    <SeekBar
+        android:id="@+id/RedProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        app:layout_constraintStart_toEndOf="@+id/RedLabel"
+        app:layout_constraintBottom_toBottomOf="@+id/RedLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:progress="0"
+        android:max="255"
+        />
+
+    <TextView
+        android:id="@+id/GreenLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GREEN:"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/RedLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        />
+
+    <SeekBar
+        android:id="@+id/GreenProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        app:layout_constraintStart_toEndOf="@+id/GreenLabel"
+        app:layout_constraintBottom_toBottomOf="@+id/GreenLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:progress="0"
+        android:max="255"
+        />
+
+    <TextView
+        android:id="@+id/BlueLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BLUE:"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/GreenLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        />
+
+    <SeekBar
+        android:id="@+id/BlueProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        app:layout_constraintStart_toEndOf="@+id/BlueLabel"
+        app:layout_constraintBottom_toBottomOf="@+id/BlueLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:progress="0"
+        android:max="255"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

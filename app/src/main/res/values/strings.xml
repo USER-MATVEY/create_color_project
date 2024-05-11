@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">create_color_app</string>
+    <string name="header_text">Let\'s Create a new COLOR!</string>
+    <string name="create_button_text">Create color</string>
+</resources>
