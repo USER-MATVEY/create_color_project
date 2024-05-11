@@ -2,6 +2,7 @@ package com.dobriyanovmp.create_color_app
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
@@ -17,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var state: activityState
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +31,21 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        state = savedInstanceState?.getParcelable("activityState")?: activityState(
+            viewColor = Color.rgb(255,255,255)
+        )
+
+        binding.ColorView.setBackgroundColor(state.viewColor)
+
         binding.CreateButton.setOnClickListener {
             showAlterDialog()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("activityState", state)
+
     }
 
     private fun showAlterDialog() {
@@ -90,13 +104,15 @@ class MainActivity : AppCompatActivity() {
             .setView(dialogBinding.root)
             .setPositiveButton("Create") {
                 _, _ ->
-                binding.ColorView.setBackgroundColor(
-                    Color.rgb(
+                run {
+                    val color = Color.rgb(
                         dialogBinding.RedProgress.progress,
                         dialogBinding.GreenProgress.progress,
                         dialogBinding.BlueProgress.progress
                     )
-                )
+                    binding.ColorView.setBackgroundColor(color)
+                    state.viewColor = color
+                }
             }
             .create()
         dialog.show()
