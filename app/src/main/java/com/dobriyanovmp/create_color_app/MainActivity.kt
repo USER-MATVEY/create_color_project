@@ -1,6 +1,11 @@
 package com.dobriyanovmp.create_color_app
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
+import android.widget.SeekBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.dobriyanovmp.create_color_app.databinding.ActivityMainBinding
 import com.dobriyanovmp.create_color_app.databinding.AlertLayoutBinding
+import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -31,19 +37,68 @@ class MainActivity : AppCompatActivity() {
     private fun showAlterDialog() {
         val dialogBinding = AlertLayoutBinding.inflate(layoutInflater)
 
+        val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                when (seekBar?.id) {
+                    R.id.RedProgress -> {
+                        dialogBinding.RedInput.setText(
+                            dialogBinding.RedProgress.progress.toString())
+                    }
+                    R.id.GreenProgress -> {
+                        dialogBinding.GreenInput.setText(
+                            dialogBinding.GreenProgress.progress.toString()
+                        )
+                    }
+                    R.id.BlueProgress -> {
+                        dialogBinding.BlueInput.setText(
+                            dialogBinding.BlueProgress.progress.toString()
+                        )
+                    }
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) { }
+        }
+
+        fun textListener(editSeekbar: SeekBar): TextWatcher {
+            return object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    editSeekbar.progress =
+                        s?.toString()?.toIntOrNull()?.coerceIn(0, editSeekbar.max) ?: 0
+                }
+
+                override fun afterTextChanged(s: Editable?) { }
+            }
+        }
+
+        dialogBinding.RedInput.addTextChangedListener(textListener(dialogBinding.RedProgress))
+        dialogBinding.GreenInput.addTextChangedListener(textListener(dialogBinding.GreenProgress))
+        dialogBinding.BlueInput.addTextChangedListener(textListener(dialogBinding.BlueProgress))
+
+        dialogBinding.RedProgress.setOnSeekBarChangeListener(seekBarChangeListener)
+        dialogBinding.GreenProgress.setOnSeekBarChangeListener(seekBarChangeListener)
+        dialogBinding.BlueProgress.setOnSeekBarChangeListener(seekBarChangeListener)
+
         val dialog = AlertDialog.Builder(this)
             .setCancelable(true)
             .setTitle("Creating color")
             .setMessage("Create color, please!")
             .setView(dialogBinding.root)
             .setPositiveButton("Create") {
-                _, _ -> createColor()
+                _, _ ->
+                binding.ColorView.setBackgroundColor(
+                    Color.rgb(
+                        dialogBinding.RedProgress.progress,
+                        dialogBinding.GreenProgress.progress,
+                        dialogBinding.BlueProgress.progress
+                    )
+                )
             }
             .create()
         dialog.show()
-    }
-
-    private fun createColor() {
-
     }
 }
